@@ -1,0 +1,37 @@
+name: Update Rozetka feed
+
+on:
+  schedule:
+    # Runs daily at 05:00 UTC (08:00 Kyiv time). Adjust as needed -
+    # Rozetka itself re-fetches the feed URL about once per hour, so
+    # there is no benefit to running this more often than your data
+    # actually changes (once or a few times a day is plenty).
+    - cron: "0 5 * * *"
+  workflow_dispatch: {}   # lets you trigger a run manually from the Actions tab
+
+jobs:
+  update-feed:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r scripts/requirements.txt
+
+      - name: Build feed
+        env:
+          PROM_FEED_URL: ${{ secrets.PROM_FEED_URL }}
+          SUPPLIER_FEED_URL: ${{ secrets.SUPPLIER_FEED_URL }}
+        run: python scripts/build_feed.py
+
+      - name: Commit updated feed
+        run: |
+          git config user.name "rozetka-feed-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add feed/rozetka_feed.xml
+          git diff --quiet --cached || git commit -m "Auto-update Rozetka feed"
+          git push

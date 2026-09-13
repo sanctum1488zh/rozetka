@@ -184,6 +184,32 @@ PROTEIN_PURITY_PATTERNS = [
     (re.compile(r"концентрат|concentrate", re.I), "Концентрат"),
     (re.compile(r"комплекс|matrix|power|blend|combo", re.I), "Комбінована"),
 ]
+PROTEIN_ORIGIN_ANIMAL = re.compile(
+    r"сывороточ|сироватков|whey|казеин|казеїн|casein|говяж|яловичий|beef|яичн|яєчн|egg", re.I)
+PROTEIN_ORIGIN_PLANT = re.compile(
+    r"веган|vegan|соев|соєв|soy|горохов|pea|рисов|rice|конопл|hemp", re.I)
+GAINER_TYPE_PATTERNS = [
+    (re.compile(r"carbo|waxy|dextrin|instant oats|овсянк", re.I), "Високовуглеводні гейнери"),
+]
+FATBURNER_TYPE_PATTERNS = [
+    (re.compile(r"l-carnitine|л-карнитин|карнітин", re.I), "L-карнітин"),
+    (re.compile(r"\bcla\b|конъюгирован|кон'югован", re.I), "Кон'югована лінолева кислота"),
+    (re.compile(r"термоген|thermogenic|caffeine.*fat|fat.*burn", re.I), "Термогеніки"),
+    (re.compile(r"диуретик|діуретик|diuretic|water\s?loss", re.I), "Діуретики"),
+]
+MAGNESIA_FORM_PATTERNS = [
+    (re.compile(r"брикет|block", re.I), "Брикети"),
+    (re.compile(r"жидк|рідк|liquid", re.I), "Рідка"),
+    (re.compile(r"шар|ball|куля", re.I), "Куля"),
+    (re.compile(r"гель|gel", re.I), "Гель"),
+    (re.compile(r"порошок|рассыпн|розсипн|powder", re.I), "Порошок"),
+]
+EXPANDER_TYPE_PATTERNS = [
+    (re.compile(r"резинка для фитнеса|фітнес.?гумка|power band|loop band|fitness band|resistance band", re.I), "Стрічкові"),
+    (re.compile(r"кистевой эспандер|кистьовий еспандер|hand grip|силикон|силікон", re.I), "Гелеві"),
+    (re.compile(r"пружин|spring", re.I), "Пружинні"),
+    (re.compile(r"трубчаст|tube", re.I), "Трубчасті"),
+]
 FEMALE_RE = re.compile(r"жіноч|женск|for women|lady|femme", re.I)
 COLOR_WORDS = {
     "black": "Чорний", "white": "Білий", "red": "Червоний", "blue": "Синій",
@@ -236,6 +262,25 @@ def build_params(name, category_id, prom_params):
         if pp and "ступінь очищення" not in names_lower:
             params.append(("Ступінь очищення", pp))
             names_lower.add("ступінь очищення")
+        if "різновид за походженням" not in names_lower:
+            if PROTEIN_ORIGIN_ANIMAL.search(name):
+                params.append(("Різновид за походженням", "Тваринний"))
+                names_lower.add("різновид за походженням")
+            elif PROTEIN_ORIGIN_PLANT.search(name):
+                params.append(("Різновид за походженням", "Рослинний"))
+                names_lower.add("різновид за походженням")
+
+    if category_id == "273297":
+        gt = match_first(GAINER_TYPE_PATTERNS, name)
+        if gt and "тип" not in names_lower:
+            params.append(("Тип", gt))
+            names_lower.add("тип")
+
+    if category_id == "273296":
+        fb = match_first(FATBURNER_TYPE_PATTERNS, name)
+        if fb and "різновид" not in names_lower:
+            params.append(("Різновид", fb))
+            names_lower.add("різновид")
 
     if category_id in BADY_CATS:
         form = match_first(FORM_PATTERNS, name)
@@ -249,6 +294,29 @@ def build_params(name, category_id, prom_params):
         if "вікова група" not in names_lower:
             params.append(("Вікова група", "Від 18 років"))
             names_lower.add("вікова група")
+
+    if category_id == "4669351":
+        mf = match_first(MAGNESIA_FORM_PATTERNS, name)
+        if mf and "форма випуску" not in names_lower:
+            params.append(("Форма випуску", mf))
+            names_lower.add("форма випуску")
+
+    if category_id == "4669267":
+        et = match_first(EXPANDER_TYPE_PATTERNS, name)
+        if et and "тип" not in names_lower:
+            params.append(("Тип", et))
+            names_lower.add("тип")
+
+    if category_id == "4653745" and "тип" not in names_lower:
+        params.append(("Тип", "Спортивна пляшка"))
+        names_lower.add("тип")
+
+    if category_id == "4627638" and "тип" not in names_lower:
+        if re.search(r"контейнер|food storage|для еды|для їжі", name, re.I):
+            params.append(("Тип", "Термос для їжі"))
+        else:
+            params.append(("Тип", "Термос класичний"))
+        names_lower.add("тип")
 
     if category_id in ACCESSORY_CATS or category_id in FITNESS_CATS:
         color = extract_color(name)

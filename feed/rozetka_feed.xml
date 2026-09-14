@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<yml_catalog date="2026-09-13 17:48">
+<yml_catalog date="2026-09-14 05:16">
   <shop>
     <name>ProteinPlus</name>
     <company>ProteinPlus</company>
@@ -11183,7 +11183,7 @@
         <param name="Стать">Чоловічий, Жіночий</param>
         <param name="Вікова група">Від 18 років</param>
       </offer>
-      <offer id="0184303" available="true">
+      <offer id="0184303" available="false">
         <price>4484</price>
         <promo_price>3766</promo_price>
         <currencyId>UAH</currencyId>
@@ -11191,7 +11191,7 @@
         <picture>https://proteinplus.pro/images/products-images/full/01843.jpg</picture>
         <vendor>Dymatize Nutrition</vendor>
         <article>01843-03</article>
-        <stock_quantity>100</stock_quantity>
+        <stock_quantity>0</stock_quantity>
         <name>Казеиновый протеин Dymatize Elite Casein 1,8 кг печенье с кремом</name>
         <name_ua>Казеїновий протеїн Dymatize Elite Casein 1,8 кг печиво з кремом</name_ua>
         <description><![CDATA[Казеиновый протеин Dymatize Elite Casein — Казеиновый протеин — медленно усваиваемый молочный белок, обеспечивающий длительное питание мышц аминокислотами. Оптимален перед сном или в перерывах между приёмами пищи для защиты от катаболизма. Фасовка: 1,8 кг. Вкус: печенье с кремом. Производитель: Dymatize (США). Данное средство не является лекарственным препаратом, перед применением рекомендуется проконсультироваться с врачом.]]></description>
@@ -20594,15 +20594,15 @@
         <param name="Стать">Чоловічий, Жіночий</param>
         <param name="Вікова група">Від 18 років</param>
       </offer>
-      <offer id="2021101" available="true">
-        <price>1097</price>
-        <promo_price>921</promo_price>
+      <offer id="2021101" available="false">
+        <price>1259</price>
+        <promo_price>1057</promo_price>
         <currencyId>UAH</currencyId>
         <categoryId>274390</categoryId>
         <picture>https://proteinplus.pro/images/products-images/full/20211.jpg</picture>
         <vendor>NOW</vendor>
         <article>20211-01</article>
-        <stock_quantity>100</stock_quantity>
+        <stock_quantity>0</stock_quantity>
         <name>Белокопытник NOW Butterbur 60 вегетарианских капсул</name>
         <name_ua>Кремена (белокопитник) NOW Butterbur 60 вегетаріанських капсул</name_ua>
         <description><![CDATA[Белокопытник NOW Butterbur — растительный экстракт белокопытника, традиционно применяемый для поддержки дыхательной системы Фасовка: 60 вегетарианских капсул. Производитель: NOW (США). Данное средство не является лекарственным препаратом, перед применением рекомендуется проконсультироваться с врачом.]]></description>
@@ -24965,8 +24965,8 @@
         <param name="Вікова група">Від 18 років</param>
       </offer>
       <offer id="2352501" available="false">
-        <price>71</price>
-        <promo_price>59</promo_price>
+        <price>84</price>
+        <promo_price>70</promo_price>
         <currencyId>UAH</currencyId>
         <categoryId>273294</categoryId>
         <picture>https://proteinplus.pro/images/products-images/full/23525.jpg</picture>
@@ -28742,15 +28742,15 @@
         <param name="Стать">Чоловічий, Жіночий</param>
         <param name="Вікова група">Від 18 років</param>
       </offer>
-      <offer id="2384305" available="true">
-        <price>3380</price>
-        <promo_price>2839</promo_price>
+      <offer id="2384305" available="false">
+        <price>3505</price>
+        <promo_price>2944</promo_price>
         <currencyId>UAH</currencyId>
         <categoryId>273294</categoryId>
         <picture>https://proteinplus.pro/images/products-images/full/23843.jpg</picture>
         <vendor>BioTech</vendor>
         <article>23843-05</article>
-        <stock_quantity>100</stock_quantity>
+        <stock_quantity>0</stock_quantity>
         <name>Сывороточный протеин BioTech Platinum Whey 2 кг белый шоколад-малина</name>
         <name_ua>Сироватковий протеїн BioTech Platinum Whey 2 кг білий шоколад-малина</name_ua>
         <description><![CDATA[Сывороточный протеин BioTech Platinum Whey — Сывороточный протеин — быстроусвояемый источник высококачественного белка на основе молочной сыворотки. Способствует восстановлению и росту мышечной массы после тренировок, содержит полный аминокислотный профиль, включая BCAA. Фасовка: 22,5 г. Вкус: печенье с кремом. Производитель: BioTech (Венгрия). Данное средство не является лекарственным препаратом, перед применением рекомендуется проконсультироваться с врачом.]]></description>
@@ -34957,15 +34957,15 @@
         <param name="Стать">Чоловічий, Жіночий</param>
         <param name="Вікова група">Від 18 років</param>
       </offer>
-      <offer id="2283301" available="true">
-        <price>695</price>
-        <promo_price>583</promo_price>
+      <offer id="2283301" available="false">
+        <price>780</price>
+        <promo_price>655</promo_price>
         <currencyId>UAH</currencyId>
         <categoryId>273293</categoryId>
         <picture>https://proteinplus.pro/images/products-images/full/22833.jpg</picture>
         <vendor>OstroVit</vendor>
         <article>22833-01</article>
-        <stock_quantity>100</stock_quantity>
+        <stock_quantity>0</stock_quantity>
         <name>Три-креатин малат OstroVit TCM 3600 180 капсул</name>
         <name_ua>Три-креатин малат OstroVit TCM 3600 180 капсул</name_ua>
         <description><![CDATA[Три-креатин малат OstroVit TCM 3600 — креатин, связанный с яблочной кислотой (малатом) — лучше растворяется в воде, мягче действует на желудок и дополнительно поддерживает выработку энергии в цикле Кребса. Фасовка: 180 капсул. Производитель: OstroVit (Польша). Данное средство не является лекарственным препаратом, перед применением рекомендуется проконсультироваться с врачом.]]></description>
@@ -50501,8 +50501,8 @@
         <param name="Вікова група">Від 18 років</param>
       </offer>
       <offer id="1877501" available="true">
-        <price>1448</price>
-        <promo_price>1216</promo_price>
+        <price>1580</price>
+        <promo_price>1327</promo_price>
         <currencyId>UAH</currencyId>
         <categoryId>274789</categoryId>
         <picture>https://proteinplus.pro/images/products-images/full/18775.jpg</picture>
@@ -59064,8 +59064,8 @@
         <param name="Вікова група">Від 18 років</param>
       </offer>
       <offer id="0087101" available="false">
-        <price>735</price>
-        <promo_price>617</promo_price>
+        <price>822</price>
+        <promo_price>690</promo_price>
         <currencyId>UAH</currencyId>
         <categoryId>273295</categoryId>
         <picture>https://proteinplus.pro/images/products-images/full/00871.jpg</picture>
@@ -60875,15 +60875,15 @@
         <param name="Стать">Чоловічий, Жіночий</param>
         <param name="Вікова група">Від 18 років</param>
       </offer>
-      <offer id="2329501" available="true">
-        <price>1917</price>
-        <promo_price>1610</promo_price>
+      <offer id="2329501" available="false">
+        <price>2103</price>
+        <promo_price>1766</promo_price>
         <currencyId>UAH</currencyId>
         <categoryId>273295</categoryId>
         <picture>https://proteinplus.pro/images/products-images/full/23295.jpg</picture>
         <vendor>Olimp</vendor>
         <article>23295-01</article>
-        <stock_quantity>100</stock_quantity>
+        <stock_quantity>0</stock_quantity>
         <name>Аминокислотный комплекс OLIMP Anabolic Amino 9000 150 таблеток</name>
         <name_ua>Амінокислотний комплекс OLIMP Anabolic Amino 9000 150 таблеток</name_ua>
         <description><![CDATA[Аминокислотный комплекс OLIMP Anabolic Amino 9000 — комплекс аминокислот обеспечивает организм строительным материалом для мышечного белка и поддерживает восстановление после интенсивных тренировок Фасовка: 300 таблеток. Производитель: OLIMP (Польша). Данное средство не является лекарственным препаратом, перед применением рекомендуется проконсультироваться с врачом.]]></description>
@@ -63401,15 +63401,15 @@
         <param name="Стать">Чоловічий, Жіночий</param>
         <param name="Вікова група">Від 18 років</param>
       </offer>
-      <offer id="2490802" available="true">
-        <price>690</price>
-        <promo_price>579</promo_price>
+      <offer id="2490802" available="false">
+        <price>774</price>
+        <promo_price>650</promo_price>
         <currencyId>UAH</currencyId>
         <categoryId>273297</categoryId>
         <picture>https://proteinplus.pro/images/products-images/full/24908.jpg</picture>
         <vendor>Amix</vendor>
         <article>24908-02</article>
-        <stock_quantity>100</stock_quantity>
+        <stock_quantity>0</stock_quantity>
         <name>Углеводный гейнер AMIX Carbo Jet Gain 1 кг банан</name>
         <name_ua>Вуглеводний гейнер AMIX Carbo Jet Gain 1 кг банан</name_ua>
         <description><![CDATA[Углеводный гейнер AMIX Carbo Jet Gain — высококалорийный гейнер с акцентом на углеводы для быстрого пополнения энергетических запасов и набора массы Фасовка: 1 кг. Вкус: ваниль. Производитель: AMIX (Англия). Данное средство не является лекарственным препаратом, перед применением рекомендуется проконсультироваться с врачом.]]></description>

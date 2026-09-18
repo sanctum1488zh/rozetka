@@ -80,6 +80,21 @@ DIRECT_CATEGORY_MAP = {
     "No, предтренировочники": "341460",
     "Для повышение тестостерона": "4653731",
     "Заменители питания": "4653703",
+    # Intentionally NOT mapped (confirmed with seller 2026-09-15):
+    # "Уценка спортивного питания", "Спортивное питание на развес",
+    # "Hi-tech pharma", "Cla - конъюгированная линолевая к-та",
+    # "Глютамин", "Препараты для суставов и связок", "Карбо (углеводы)",
+    # "Постренировочные комплексы и специальные препараты" - seller
+    # confirmed these 6 categories are not needed at all (likely empty
+    # shell categories with 0 real products; no offer using their
+    # categoryIds was found in the portion of the live feed that could
+    # be inspected).
+    # "Американские PURCHASEPEPTIDES", "Zhengzhou Pharmaceutical Co Ltd",
+    #   "Пептиды (инъекционная форма)", "Фактор роста" - injectable
+    #   peptides/research chemicals, seller does not sell these on
+    #   Rozetka at all (likely separate regulatory requirements from
+    #   ordinary dietary supplements). Do not add without an explicit
+    #   decision to do so.
 }
 BADY_CATS = {"273293", "273294", "273295", "273296", "273297", "274390", "274789",
              "299356", "341460", "4653703", "4653717", "4653724", "4653731"}
@@ -211,6 +226,29 @@ EXPANDER_TYPE_PATTERNS = [
     (re.compile(r"трубчаст|tube", re.I), "Трубчасті"),
 ]
 FEMALE_RE = re.compile(r"жіноч|женск|for women|lady|femme", re.I)
+
+# Rozetka requires the name to start with the product TYPE, not the brand
+# (name formula: Тип товару + Бренд + Модель + ...). Some Prom listings in
+# these categories start directly with a Latin brand/model name instead -
+# flagged by a Rozetka consultant reviewing an actual import (2026-09-15).
+# Fix: prepend a category type word whenever the name doesn't already start
+# with a Cyrillic word (a decent proxy for "already has a type descriptor",
+# since a real type noun in this catalog is always Cyrillic).
+NAME_TYPE_PREFIX = {
+    "273296": ("Жиросжигатель", "Жироспалювач"),      # Жироспалювачі
+    "4653731": ("Стимулятор тестостерона", "Стимулятор тестостерону"),  # Стимулятори тестостерону
+}
+STARTS_CYRILLIC_RE = re.compile(r"^[А-Яа-яІіЇїЄєҐґ]")
+
+
+def apply_name_type_prefix(name, name_ua, category_id):
+    prefix = NAME_TYPE_PREFIX.get(category_id)
+    if not prefix or STARTS_CYRILLIC_RE.match(name):
+        return name, name_ua
+    ru_prefix, ua_prefix = prefix
+    new_name = f"{ru_prefix} {name}" if not name.lower().startswith(ru_prefix.lower()) else name
+    new_name_ua = f"{ua_prefix} {name_ua}" if not name_ua.lower().startswith(ua_prefix.lower()) else name_ua
+    return new_name, new_name_ua
 COLOR_WORDS = {
     "black": "Чорний", "white": "Білий", "red": "Червоний", "blue": "Синій",
     "green": "Зелений", "yellow": "Жовтий", "grey": "Сірий", "gray": "Сірий",
@@ -482,11 +520,13 @@ def build_rozetka_feed(prom_offers, supplier_feed):
         base_price, promo_price = compute_prices(o["price"], rrp, o["category_id"])
         if base_price is None or not picture:
             continue
+        fixed_name, fixed_name_ua = apply_name_type_prefix(
+            o["name"], o["name_ua"] or o["name"], o["category_id"])
         resolved.append({
             "id": re.sub(r"[^A-Za-z0-9]", "", supplier_article or raw_code) or o["id"],
             "article": supplier_article or raw_code,
-            "name": o["name"],
-            "name_ua": o["name_ua"] or o["name"],
+            "name": fixed_name,
+            "name_ua": fixed_name_ua,
             "vendor": o["vendor"] or "Без бренду",
             "available": available,
             "base_price": base_price,

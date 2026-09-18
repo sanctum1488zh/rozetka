@@ -68,6 +68,19 @@ OUTPUT_PATH = os.environ.get("OUTPUT_PATH", "feed/rozetka_feed.xml")
 SHOP_NAME = os.environ.get("SHOP_NAME", "ProteinPlus")
 SHOP_URL = os.environ.get("SHOP_URL", "https://proteinpro.prom.ua/")
 
+# Manually sourced photos for specific articles confirmed absent from the
+# supplier feed (found via web search on official brand sites). Add new
+# entries here as they're found rather than leaving items on the
+# unverified images.prom.ua fallback.
+MANUAL_PICTURE_OVERRIDES = {
+    '23719-06': 'https://ostrovit.com/hpeciai/089b15a36fad960e5c9ae106ce252372/eng_pl_OstroVit-Creatine-Monohydrate-1000-g-26790_3.png',  # OstroVit Creatine Monohydrate 1kg cola
+    '19467-01': 'https://www.gosupps.com/media/catalog/product/6/1/61yil6qQwDL.jpg',  # Blender Bottle Classic 600ml red
+    '20813-01': 'https://amixstore.com/cdn/shop/files/AX_Xfat_60ml_5c1d9ea7-3379-4726-8ebc-2bcc7c9c4dc9.png',  # AMIX X-Fat shot 60ml fruity
+    '24065-04': 'https://sporternutrition.com/image/cache/catalog/prod/bcaa_cherry2-1400x1000.png',  # Sporter BCAA Instant 300g grapefruit (generic line photo, flavor label not confirmed)
+    '23291-01': 'https://www.fruitfulyield.com/media/catalog/product/cache/fc2a32dea7220c8701f102b3bcaf4544/n/a/natures_plus_calcium_1.jpg',  # Natures Plus Animal Parade Calcium vanilla sundae 90 tabs
+    '18610-01': 'https://mst-nutrition.de/cdn/shop/files/zinc-25-citrate-1.jpg',  # MST Zinc 25 Citrate 100 vcaps
+}
+
 TARGET_MARGIN = 0.05
 K_PROM = (1 + TARGET_MARGIN) / ((1 - 0.16) * (1 - 0.1889))  # for back-solving implied cost from a Prom price
 
@@ -539,7 +552,9 @@ def build_rozetka_feed(prom_offers, supplier_feed):
         )
         fe = supplier_feed.get(supplier_article) if supplier_article else None
         available = fe["available"] if fe else o["available"]
-        picture = (fe["picture"] if fe and fe.get("picture") else o["picture"])
+        picture = (MANUAL_PICTURE_OVERRIDES.get(supplier_article)
+                   or (fe["picture"] if fe and fe.get("picture") else None)
+                   or o["picture"])
         country = (fe["country"] if fe and fe.get("country") else o["country"])
         rrp = fe["rrp_uah"] if fe else None
         base_price, promo_price = compute_prices(o["price"], rrp, o["category_id"])

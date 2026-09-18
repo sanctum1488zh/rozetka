@@ -33,12 +33,31 @@ from lxml import etree
 # stale (new products added after the last xlsx export won't resolve
 # until the table is refreshed).
 # ---------------------------------------------------------------
+# Код_товару -> Ідентифікатор_товару translation table (kept for reference /
+# backward compatibility, but see id_to_article below for the table that
+# actually matters).
 _MAPPING_PATH = os.path.join(os.path.dirname(__file__), "..", "references", "code_to_article.json")
 try:
     with open(_MAPPING_PATH, encoding="utf-8") as _f:
         CODE_TO_ARTICLE = json.load(_f)
 except FileNotFoundError:
     CODE_TO_ARTICLE = {}
+
+# Offer id -> Ідентифікатор_товару translation table. This is the reliable
+# one: most offers in the live Prom YML feed have NO <vendorCode> element
+# at all (only a sparse subset do) - vendorCode-based matching silently
+# fails for the majority of the catalog. The offer's own `id` attribute
+# (a large Prom-internal number, e.g. "3160909425") IS always present, and
+# corresponds exactly to the "Унікальний_ідентифікатор" column in a full
+# Prom xlsx export - use that instead. Discovered 2026-09-18 after a
+# picture-source audit found ~84% of offers falling back to the
+# unverified images.prom.ua source instead of the supplier feed.
+_ID_MAPPING_PATH = os.path.join(os.path.dirname(__file__), "..", "references", "id_to_article.json")
+try:
+    with open(_ID_MAPPING_PATH, encoding="utf-8") as _f:
+        ID_TO_ARTICLE = json.load(_f)
+except FileNotFoundError:
+    ID_TO_ARTICLE = {}
 
 # ---------------------------------------------------------------
 # Config (from environment / GitHub Actions secrets)
@@ -506,9 +525,15 @@ def build_rozetka_feed(prom_offers, supplier_feed):
         # feed) - translate to the supplier's Ідентифікатор_товару before
         # looking it up in the supplier feed. Try a few formats since the
         # feed isn't perfectly consistent about zero-padding.
+        # Primary: match via the offer's own `id` attribute (always present)
+        # against Унікальний_ідентифікатор -> Ідентифікатор_товару.
+        # Fallback: the older vendorCode-based lookup, for the rare offers
+        # not covered by id_to_article (e.g. added after the xlsx export
+        # this table was built from).
         raw_code = o["article"]
         supplier_article = (
-            CODE_TO_ARTICLE.get(raw_code)
+            ID_TO_ARTICLE.get(o["id"])
+            or CODE_TO_ARTICLE.get(raw_code)
             or CODE_TO_ARTICLE.get(raw_code.zfill(9))
             or CODE_TO_ARTICLE.get(str(int(raw_code)).zfill(9) if raw_code.isdigit() else "")
         )

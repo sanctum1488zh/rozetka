@@ -59,6 +59,15 @@ try:
 except FileNotFoundError:
     ID_TO_ARTICLE = {}
 
+# Frozen supplier article -> offer id exactly as imported into Pricecreator
+# on 2026-09-15. Never change these ids: Rozetka links items by offer id.
+_PC_IDS_PATH = os.path.join(os.path.dirname(__file__), "..", "references", "pricecreator_ids.json")
+try:
+    with open(_PC_IDS_PATH, encoding="utf-8") as _f:
+        PRICECREATOR_IDS = json.load(_f)
+except FileNotFoundError:
+    PRICECREATOR_IDS = {}
+
 # ---------------------------------------------------------------
 # Config (from environment / GitHub Actions secrets)
 # ---------------------------------------------------------------
@@ -550,6 +559,11 @@ def build_rozetka_feed(prom_offers, supplier_feed):
             or CODE_TO_ARTICLE.get(raw_code.zfill(9))
             or CODE_TO_ARTICLE.get(str(int(raw_code)).zfill(9) if raw_code.isdigit() else "")
         )
+        legacy_article = (
+            CODE_TO_ARTICLE.get(raw_code)
+            or CODE_TO_ARTICLE.get(raw_code.zfill(9))
+            or CODE_TO_ARTICLE.get(str(int(raw_code)).zfill(9) if raw_code.isdigit() else "")
+        )
         fe = supplier_feed.get(supplier_article) if supplier_article else None
         available = fe["available"] if fe else o["available"]
         picture = (MANUAL_PICTURE_OVERRIDES.get(supplier_article)
@@ -563,7 +577,12 @@ def build_rozetka_feed(prom_offers, supplier_feed):
         fixed_name, fixed_name_ua = apply_name_type_prefix(
             o["name"], o["name_ua"] or o["name"], o["category_id"])
         resolved.append({
-            "id": re.sub(r"[^A-Za-z0-9]", "", supplier_article or raw_code) or o["id"],
+            # Offer id must stay exactly as first imported into Pricecreator
+            # (15.09): Pricecreator/Rozetka match items by offer id, so it is
+            # derived WITHOUT ID_TO_ARTICLE (added 18.09), else ~3200 items
+            # get new ids and turn into duplicates.
+            "id": (PRICECREATOR_IDS.get(supplier_article or "")
+                   or re.sub(r"[^A-Za-z0-9]", "", legacy_article or raw_code) or o["id"]),
             "article": supplier_article or raw_code,
             "name": fixed_name,
             "name_ua": fixed_name_ua,

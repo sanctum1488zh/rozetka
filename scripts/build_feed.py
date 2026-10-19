@@ -453,8 +453,30 @@ def rate_for(price, brackets):
     return brackets[-1][2]
 
 
-def compute_prices(prom_price, rrp_uah, category_id):
-    """Returns (base_price, promo_price) both already >= supplier RRP as a safety floor."""
+def price_for_margin(cost, brackets):
+    """Lowest price P with P*(1-rate(P)) >= cost*(1+TARGET_MARGIN).
+    Checks every bracket instead of iterating, so a price can't oscillate
+    across a bracket edge and end up under the margin."""
+    need = cost * (1 + TARGET_MARGIN)
+    best = None
+    for lo, hi, rate in brackets:
+        p = max(lo, math.ceil(need / (1 - rate)))
+        if p <= hi and (best is None or p < best):
+            best = p
+    return best
+
+
+def compute_prices(prom_price, rrp_uah, category_id, cost=None):
+    """Returns (base_price, promo_price) both already >= supplier RRP as a safety floor.
+    cost = supplier purchase price (vendorPrice). When known, the price is
+    built from it; the Prom back-solve below is only a fallback (19.10.2026:
+    the back-solve underestimated cost and ~2000 SKUs sold at a loss)."""
+    if cost:
+        promo_price = price_for_margin(cost, get_brackets(category_id))
+        if rrp_uah:
+            promo_price = max(promo_price, math.ceil(rrp_uah))
+        return math.ceil(promo_price / 0.84), promo_price
+
     if prom_price is None:
         return None, None
 
@@ -504,9 +526,11 @@ def parse_supplier_feed(raw_bytes):
         vc = elem.findtext("vendorCode")
         if vc:
             price = elem.findtext("price")
+            vprice = (elem.findtext("vendorPrice") or "").strip()
             feed[vc] = {
                 "available": elem.get("available") == "true",
                 "rrp_uah": float(price) if price else None,
+                "cost": float(vprice) if vprice and float(vprice) > 0 else None,
                 "picture": elem.findtext("picture"),
                 "country": elem.findtext("country"),
             }
@@ -575,7 +599,8 @@ def build_rozetka_feed(prom_offers, supplier_feed):
                    or o["picture"])
         country = (fe["country"] if fe and fe.get("country") else o["country"])
         rrp = fe["rrp_uah"] if fe else None
-        base_price, promo_price = compute_prices(o["price"], rrp, o["category_id"])
+        base_price, promo_price = compute_prices(o["price"], rrp, o["category_id"],
+                                                 cost=fe.get("cost") if fe else None)
         if base_price is None or not picture:
             continue
         fixed_name, fixed_name_ua = apply_name_type_prefix(

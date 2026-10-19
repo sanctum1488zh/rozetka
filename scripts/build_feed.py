@@ -194,6 +194,10 @@ def classify_accessory(name):
 
 
 def assign_rozetka_category(prom_category_name, product_name):
+    # Stop list: like the supplier's "Уцінка", these never go to Rozetka.
+    # CBD needs per-SKU documents (Rozetka category manager, 16.10.2026).
+    if re.search(r"\bCBD\b", product_name or "", re.I):
+        return None
     if prom_category_name in DIRECT_CATEGORY_MAP:
         return DIRECT_CATEGORY_MAP[prom_category_name]
     if "долголет" in prom_category_name.lower():

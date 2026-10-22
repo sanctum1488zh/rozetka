@@ -31,7 +31,7 @@ jobs:
         run: |
           set -o pipefail
           if ! python scripts/build_feed.py 2>&1 | tee build.log; then
-            echo "::error title=build_feed failed::$(tail -n 6 build.log | tr '\n' ' ' | cut -c1-900)"
+            echo "::error title=build_feed failed::$( (grep -E "Fetching|parsed" build.log; tail -n 1 build.log) | tr '\n' ' ' | cut -c1-900)"
             exit 1
           fi
 

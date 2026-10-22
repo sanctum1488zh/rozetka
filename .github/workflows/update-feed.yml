@@ -26,7 +26,14 @@ jobs:
         env:
           PROM_FEED_URL: ${{ secrets.PROM_FEED_URL }}
           SUPPLIER_FEED_URL: ${{ secrets.SUPPLIER_FEED_URL }}
-        run: python scripts/build_feed.py
+        # On failure, surface the last lines of output as an annotation so the
+        # cause is visible in the run summary/email without opening raw logs.
+        run: |
+          set -o pipefail
+          if ! python scripts/build_feed.py 2>&1 | tee build.log; then
+            echo "::error title=build_feed failed::$(tail -n 6 build.log | tr '\n' ' ' | cut -c1-900)"
+            exit 1
+          fi
 
       - name: Commit updated feed
         run: |

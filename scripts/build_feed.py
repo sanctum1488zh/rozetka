@@ -92,6 +92,17 @@ SHOP_URL = os.environ.get("SHOP_URL", "https://proteinpro.prom.ua/")
 # supplier feed (found via web search on official brand sites). Add new
 # entries here as they're found rather than leaving items on the
 # unverified images.prom.ua fallback.
+# Flavour-exact photos found per variant (Rozetka moderation 04.11.2026
+# rejected ~400 items: supplier feed has one photo per product line, showing
+# another flavour). Keys: supplier article, or "id<offer id>" for offers
+# without one. Takes priority over everything else.
+_PIC_PATH = os.path.join(os.path.dirname(__file__), "..", "references", "picture_overrides.json")
+try:
+    with open(_PIC_PATH, encoding="utf-8") as _f:
+        FLAVOUR_PICTURES = json.load(_f)
+except FileNotFoundError:
+    FLAVOUR_PICTURES = {}
+
 MANUAL_PICTURE_OVERRIDES = {
     '23719-06': 'https://ostrovit.com/hpeciai/089b15a36fad960e5c9ae106ce252372/eng_pl_OstroVit-Creatine-Monohydrate-1000-g-26790_3.png',  # OstroVit Creatine Monohydrate 1kg cola
     '19467-01': 'https://www.gosupps.com/media/catalog/product/6/1/61yil6qQwDL.jpg',  # Blender Bottle Classic 600ml red
@@ -641,6 +652,8 @@ def build_rozetka_feed(prom_offers, supplier_feed):
     dedupe_names(resolved)
 
     for r in resolved:
+        r["picture"] = (FLAVOUR_PICTURES.get(r["article"] or "")
+                        or FLAVOUR_PICTURES.get("id" + r["id"]) or r["picture"])
         offer = etree.SubElement(offers_el, "offer", id=r["id"],
                                   available="true" if r["available"] else "false")
         etree.SubElement(offer, "price").text = str(r["base_price"])

@@ -72,6 +72,17 @@ except FileNotFoundError:
 # Config (from environment / GitHub Actions secrets)
 # ---------------------------------------------------------------
 PROM_FEED_URL = os.environ.get("PROM_FEED_URL", "")
+
+
+def with_both_languages(url):
+    """Prom exports name_ua/description_ua only when languages=ru,uk.
+    A link copied with languages=ru (Nov 2026) silently put Russian text into
+    the UA fields, so force both languages whatever the stored link says."""
+    from urllib.parse import urlsplit, urlunsplit, parse_qsl, urlencode
+    parts = urlsplit(url)
+    q = [(k, v) for k, v in parse_qsl(parts.query, keep_blank_values=True) if k != "languages"]
+    q.append(("languages", "ru,uk"))
+    return urlunsplit(parts._replace(query=urlencode(q, safe=",")))
 SUPPLIER_FEED_URL = os.environ.get("SUPPLIER_FEED_URL", "")
 OUTPUT_PATH = os.environ.get("OUTPUT_PATH", "feed/rozetka_feed.xml")
 SHOP_NAME = os.environ.get("SHOP_NAME", "ProteinPlus")
@@ -689,8 +700,14 @@ def main():
         raise SystemExit("SUPPLIER_FEED_URL is not set (see README.md)")
 
     print("Fetching Prom feed...")
-    prom_offers = parse_prom_feed(fetch_xml(PROM_FEED_URL))
+    prom_offers = parse_prom_feed(fetch_xml(with_both_languages(PROM_FEED_URL)))
     print(f"  {len(prom_offers)} offers parsed")
+    with_ua = sum(1 for o in prom_offers if o["name_ua"])
+    if with_ua < 0.9 * len(prom_offers):
+        # Guard: without UA texts every new offer would go to Rozetka with
+        # Russian in the Ukrainian fields and fail moderation.
+        raise SystemExit(f"Prom feed has name_ua for only {with_ua}/{len(prom_offers)} offers - "
+                         "check PROM_FEED_URL (needs languages=ru,uk); feed NOT updated")
 
     print("Fetching supplier feed...")
     supplier_feed = parse_supplier_feed(fetch_xml(SUPPLIER_FEED_URL))

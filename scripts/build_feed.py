@@ -81,7 +81,11 @@ def with_both_languages(url):
     from urllib.parse import urlsplit, urlunsplit, parse_qsl, urlencode
     parts = urlsplit(url)
     q = [(k, v) for k, v in parse_qsl(parts.query, keep_blank_values=True) if k != "languages"]
+    q = [(k, v) for k, v in q if k != "html_description"]
     q.append(("languages", "ru,uk"))
+    # Keep Prom's HTML formatting (paragraphs/lists); with 0 Prom glues the
+    # lines together without spaces ("...КиевАминокислоты...").
+    q.append(("html_description", "1"))
     return urlunsplit(parts._replace(query=urlencode(q, safe=",")))
 SUPPLIER_FEED_URL = os.environ.get("SUPPLIER_FEED_URL", "")
 OUTPUT_PATH = os.environ.get("OUTPUT_PATH", "feed/rozetka_feed.xml")
@@ -446,10 +450,24 @@ def build_params(name, category_id, prom_params):
 DESC_CUT_RE = re.compile(r"\s*(Купити з доставкою|Купить с доставкой).*$", re.IGNORECASE | re.DOTALL)
 
 
+# Rozetka moderation (Nov 2026, 380 items hidden: "прибрати доставку в
+# описі"): no delivery / return / warranty promises anywhere in the text.
+# Drop any sentence or list item that mentions them.
+DESC_SERVICE_RE = re.compile(
+    r"[^.!?<>]*(?:доставк|возврат|повернен|Нов(?:ой|ою|ая|а|ій) [ПпPp](?:очт|ошт)|гаранті|гаранти|оплат[аиуі] при)[^.!?<>]*[.!?]?",
+    re.IGNORECASE)
+EMPTY_TAG_RE = re.compile(r"<(p|li|strong|b|em|span)>\s*</\1>", re.IGNORECASE)
+
+
 def clean_description(text):
     if not text:
         return ""
-    return DESC_CUT_RE.sub("", text).strip()
+    text = DESC_CUT_RE.sub("", text)
+    text = DESC_SERVICE_RE.sub("", text)
+    for _ in range(3):
+        text = EMPTY_TAG_RE.sub("", text)
+    text = re.sub(r"<ul>\s*</ul>", "", text, flags=re.IGNORECASE)
+    return text.strip()
 
 
 # ---------------------------------------------------------------

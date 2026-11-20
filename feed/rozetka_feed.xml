@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<yml_catalog date="2026-11-20 19:16">
+<yml_catalog date="2026-11-20 19:18">
   <shop>
     <name>ProteinPlus</name>
     <company>ProteinPlus</company>
@@ -48707,7 +48707,7 @@
         <promo_price>982</promo_price>
         <currencyId>UAH</currencyId>
         <categoryId>273293</categoryId>
-        <picture>https://ostrovit.com/hpeciai/089b15a36fad960e5c9ae106ce252372/eng_pl_OstroVit-Creatine-Monohydrate-1000-g-26790_3.png</picture>
+        <picture>https://images.prom.ua/7668618987_kreatin-monogidrat-poroshok.jpg</picture>
         <vendor>OstroVit</vendor>
         <article>23719-06</article>
         <stock_quantity>0</stock_quantity>
@@ -50883,7 +50883,7 @@
         <promo_price>505</promo_price>
         <currencyId>UAH</currencyId>
         <categoryId>274789</categoryId>
-        <picture>https://mst-nutrition.de/cdn/shop/files/zinc-25-citrate-1.jpg</picture>
+        <picture>https://images.prom.ua/7669255481_tsink-tsitrat-dlya.jpg</picture>
         <vendor>MST</vendor>
         <article>18610-01</article>
         <stock_quantity>0</stock_quantity>
@@ -56882,7 +56882,8 @@
         <promo_price>868</promo_price>
         <currencyId>UAH</currencyId>
         <categoryId>4656294</categoryId>
-        <picture>https://www.gosupps.com/media/catalog/product/6/1/61yil6qQwDL.jpg</picture>
+        <picture>https://images.prom.ua/7672123349_shejker-blender-bottle.jpg</picture>
+        <picture>https://images.prom.ua/7888140446_shejker-blender-bottle.jpg</picture>
         <vendor>Blender Bottle</vendor>
         <article>19467-01</article>
         <stock_quantity>0</stock_quantity>
@@ -66817,7 +66818,8 @@
         <promo_price>620</promo_price>
         <currencyId>UAH</currencyId>
         <categoryId>274789</categoryId>
-        <picture>https://www.fruitfulyield.com/media/catalog/product/cache/fc2a32dea7220c8701f102b3bcaf4544/n/a/natures_plus_calcium_1.jpg</picture>
+        <picture>https://images.prom.ua/7681154868_kaltsij-helat-s.jpg</picture>
+        <picture>https://images.prom.ua/7891335830_kaltsij-helat-s.jpg</picture>
         <vendor>Nature's Plus</vendor>
         <article>23291-01</article>
         <stock_quantity>0</stock_quantity>
@@ -92719,7 +92721,8 @@
         <promo_price>77</promo_price>
         <currencyId>UAH</currencyId>
         <categoryId>273296</categoryId>
-        <picture>https://amixstore.com/cdn/shop/files/AX_Xfat_60ml_5c1d9ea7-3379-4726-8ebc-2bcc7c9c4dc9.png</picture>
+        <picture>https://images.prom.ua/7876214910_zhiroszhigatel-shot-s.jpg</picture>
+        <picture>https://images.prom.ua/7886012354_zhiroszhigatel-shot-s.jpg</picture>
         <vendor>Amix</vendor>
         <article>20813-01</article>
         <stock_quantity>100</stock_quantity>

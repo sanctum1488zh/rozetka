@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<yml_catalog date="2026-11-20 19:13">
+<yml_catalog date="2026-11-20 19:16">
   <shop>
     <name>ProteinPlus</name>
     <company>ProteinPlus</company>
@@ -4147,7 +4147,7 @@
         <promo_price>4205</promo_price>
         <currencyId>UAH</currencyId>
         <categoryId>273294</categoryId>
-        <picture>https://statics.promofarma.com/static/promofarma/prod/product_images/mr/0NR3WPZ5_es_ES_0.jpeg</picture>
+        <picture>https://images.prom.ua/3288809023_syvorotochnyj-protein-dlya.jpg</picture>
         <vendor>Scitec Nutrition</vendor>
         <article>00722-20</article>
         <stock_quantity>0</stock_quantity>
@@ -4175,7 +4175,7 @@
         <promo_price>4205</promo_price>
         <currencyId>UAH</currencyId>
         <categoryId>273294</categoryId>
-        <picture>https://statics.promofarma.com/static/promofarma/prod/product_images/mr/4T14X94C_es_ES_0.jpg</picture>
+        <picture>https://images.prom.ua/3288809023_syvorotochnyj-protein-dlya.jpg</picture>
         <vendor>Scitec Nutrition</vendor>
         <article>00722-18</article>
         <stock_quantity>0</stock_quantity>
@@ -4323,7 +4323,8 @@
         <promo_price>97</promo_price>
         <currencyId>UAH</currencyId>
         <categoryId>273294</categoryId>
-        <picture>https://statics.promofarma.com/static/promofarma/prod/product_images/mr/9J7324HC_es_ES_0.png</picture>
+        <picture>https://images.prom.ua/7652015806_syvorotochnyj-protein-dlya.jpg</picture>
+        <picture>https://images.prom.ua/7882166780_syvorotochnyj-protein-dlya.jpg</picture>
         <vendor>Scitec Nutrition</vendor>
         <article>02757-05</article>
         <stock_quantity>100</stock_quantity>
@@ -4352,7 +4353,7 @@
         <promo_price>2000</promo_price>
         <currencyId>UAH</currencyId>
         <categoryId>273294</categoryId>
-        <picture>https://statics.promofarma.com/static/promofarma/prod/product_images/mr/V1CXK5GG_es_ES_0.jpeg</picture>
+        <picture>https://images.prom.ua/3288807696_syvorotochnyj-protein-dlya.jpg</picture>
         <vendor>Scitec Nutrition</vendor>
         <article>00518-05</article>
         <stock_quantity>0</stock_quantity>
@@ -6679,7 +6680,7 @@
         <promo_price>2000</promo_price>
         <currencyId>UAH</currencyId>
         <categoryId>273294</categoryId>
-        <picture>https://statics.promofarma.com/static/promofarma/prod/product_images/mr/LK1VY6TX_es_ES_0.png</picture>
+        <picture>https://images.prom.ua/3288807696_syvorotochnyj-protein-dlya.jpg</picture>
         <vendor>Scitec Nutrition</vendor>
         <article>00518-41</article>
         <stock_quantity>0</stock_quantity>
@@ -6737,7 +6738,7 @@
         <promo_price>2000</promo_price>
         <currencyId>UAH</currencyId>
         <categoryId>273294</categoryId>
-        <picture>https://statics.promofarma.com/static/promofarma/prod/product_images/mr/Z2Z4GVJ5_es_ES_0.jpeg</picture>
+        <picture>https://images.prom.ua/3288807696_syvorotochnyj-protein-dlya.jpg</picture>
         <vendor>Scitec Nutrition</vendor>
         <article>00518-17</article>
         <stock_quantity>0</stock_quantity>
@@ -6944,7 +6945,8 @@
         <promo_price>2038</promo_price>
         <currencyId>UAH</currencyId>
         <categoryId>273294</categoryId>
-        <picture>https://statics.promofarma.com/static/promofarma/prod/product_images/mr/GVH5GWZ1_es_ES_0.png</picture>
+        <picture>https://images.prom.ua/7652015802_syvorotochnyj-izolyat-dlya.jpg</picture>
+        <picture>https://images.prom.ua/7889263432_syvorotochnyj-izolyat-dlya.jpg</picture>
         <vendor>Scitec Nutrition</vendor>
         <article>00441-07</article>
         <stock_quantity>100</stock_quantity>
@@ -7459,7 +7461,7 @@
         <promo_price>1206</promo_price>
         <currencyId>UAH</currencyId>
         <categoryId>273294</categoryId>
-        <picture>https://statics.promofarma.com/static/promofarma/prod/product_images/mr/9FMV95Y1_es_ES_0.png</picture>
+        <picture>https://images.prom.ua/3288809800_syvorotochnyj-protein-dlya.jpg</picture>
         <vendor>Scitec Nutrition</vendor>
         <article>09454-02</article>
         <stock_quantity>0</stock_quantity>
@@ -8543,7 +8545,7 @@
         <promo_price>2000</promo_price>
         <currencyId>UAH</currencyId>
         <categoryId>273294</categoryId>
-        <picture>https://statics.promofarma.com/static/promofarma/prod/product_images/mr/35PW6383_es_ES_0.jpeg</picture>
+        <picture>https://images.prom.ua/3288807696_syvorotochnyj-protein-dlya.jpg</picture>
         <vendor>Scitec Nutrition</vendor>
         <article>00518-42</article>
         <stock_quantity>0</stock_quantity>
@@ -8935,7 +8937,7 @@
         <promo_price>2000</promo_price>
         <currencyId>UAH</currencyId>
         <categoryId>273294</categoryId>
-        <picture>https://statics.promofarma.com/static/promofarma/prod/product_images/mr/HTT3115J_es_ES_0.png</picture>
+        <picture>https://images.prom.ua/3288807696_syvorotochnyj-protein-dlya.jpg</picture>
         <vendor>Scitec Nutrition</vendor>
         <article>00518-33</article>
         <stock_quantity>0</stock_quantity>
@@ -10836,7 +10838,7 @@
         <promo_price>4198</promo_price>
         <currencyId>UAH</currencyId>
         <categoryId>273294</categoryId>
-        <picture>https://statics.promofarma.com/static/promofarma/prod/product_images/mr/CN17H0R7_es_ES_0.jpeg</picture>
+        <picture>https://images.prom.ua/3288809023_syvorotochnyj-protein-dlya.jpg</picture>
         <vendor>Scitec Nutrition</vendor>
         <article>00722-49</article>
         <stock_quantity>0</stock_quantity>
@@ -11664,7 +11666,7 @@
         <promo_price>2000</promo_price>
         <currencyId>UAH</currencyId>
         <categoryId>273294</categoryId>
-        <picture>https://statics.promofarma.com/static/promofarma/prod/product_images/mr/X4VRFKJR_es_ES_0.jpeg</picture>
+        <picture>https://images.prom.ua/7652016612_veganskij-protein-dlya.jpg</picture>
         <vendor>Scitec Nutrition</vendor>
         <article>21683-02</article>
         <stock_quantity>0</stock_quantity>
@@ -12526,7 +12528,8 @@
         <promo_price>2903</promo_price>
         <currencyId>UAH</currencyId>
         <categoryId>273294</categoryId>
-        <picture>https://cdn.drmax.zone/catalog-images/products/786064826626739167/97fed9298e1dfa11.jpg</picture>
+        <picture>https://images.prom.ua/7652016569_syvorotochnyj-izolyat-dlya.jpg</picture>
+        <picture>https://images.prom.ua/7888313584_syvorotochnyj-izolyat-dlya.jpg</picture>
         <vendor>BioTech</vendor>
         <article>18282-04</article>
         <stock_quantity>100</stock_quantity>
@@ -13596,7 +13599,7 @@
         <promo_price>1206</promo_price>
         <currencyId>UAH</currencyId>
         <categoryId>273294</categoryId>
-        <picture>https://statics.promofarma.com/static/promofarma/prod/product_images/mr/13XCT3LJ_es_ES_0.png</picture>
+        <picture>https://images.prom.ua/3288809800_syvorotochnyj-protein-dlya.jpg</picture>
         <vendor>Scitec Nutrition</vendor>
         <article>09454-22</article>
         <stock_quantity>0</stock_quantity>
@@ -36414,7 +36417,7 @@
         <promo_price>61</promo_price>
         <currencyId>UAH</currencyId>
         <categoryId>273294</categoryId>
-        <picture>https://cdn.myshoptet.com/usr/www.amix.cz/user/shop/big/8021_cornella-musli-bar-cokolada-banan--hmotnost-50g.jpg?ff=1&amp;x=1024&amp;y=1024&amp;q=85&amp;ts=6ac69e8d&amp;sg=38cb01fe</picture>
+        <picture>https://raw.githubusercontent.com/sanctum1488zh/rozetka/main/images/e6b63585dedeaca3.webp</picture>
         <vendor>Amix</vendor>
         <article>24824-01</article>
         <stock_quantity>0</stock_quantity>
@@ -45090,7 +45093,7 @@
         <promo_price>1258</promo_price>
         <currencyId>UAH</currencyId>
         <categoryId>273295</categoryId>
-        <picture>https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/sci/sci00028/l/95.jpg</picture>
+        <picture>https://images.prom.ua/2522799574_aminokisloty-bcaa-poroshok.jpg</picture>
         <vendor>Scivation (Xtend)</vendor>
         <article>00515-08</article>
         <stock_quantity>0</stock_quantity>
@@ -45168,7 +45171,7 @@
         <promo_price>1258</promo_price>
         <currencyId>UAH</currencyId>
         <categoryId>273295</categoryId>
-        <picture>https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/sci/sci00021/l/84.jpg</picture>
+        <picture>https://images.prom.ua/2522799574_aminokisloty-bcaa-poroshok.jpg</picture>
         <vendor>Scivation (Xtend)</vendor>
         <article>00515-06</article>
         <stock_quantity>0</stock_quantity>
@@ -54571,7 +54574,7 @@
         <promo_price>166</promo_price>
         <currencyId>UAH</currencyId>
         <categoryId>4653745</categoryId>
-        <picture>https://proteiinid.ee/11028-large_default/nutrend-sports-bottle-yellow-500ml.jpg</picture>
+        <picture>https://images.prom.ua/7672214996_butylka-flyaga-dlya-vody.jpg</picture>
         <vendor>Nutrend</vendor>
         <article>23217-01</article>
         <stock_quantity>100</stock_quantity>
@@ -95129,7 +95132,8 @@
         <promo_price>97</promo_price>
         <currencyId>UAH</currencyId>
         <categoryId>273294</categoryId>
-        <picture>https://statics.promofarma.com/static/promofarma/prod/product_images/mr/06KL0RXZ_es_ES_0.jpg</picture>
+        <picture>https://images.prom.ua/7652015806_syvorotochnyj-protein-dlya.jpg</picture>
+        <picture>https://images.prom.ua/7882166763_syvorotochnyj-protein-dlya.jpg</picture>
         <vendor>Scitec Nutrition</vendor>
         <article>02757-12</article>
         <stock_quantity>100</stock_quantity>

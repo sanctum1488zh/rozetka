@@ -655,10 +655,11 @@ def build_rozetka_feed(prom_offers, supplier_feed):
         # updates them there), so they win over the supplier feed photo.
         # Manual overrides still come first; supplier photo is the fallback.
         prom_pics = o.get("pictures") or ([o["picture"]] if o["picture"] else [])
-        if MANUAL_PICTURE_OVERRIDES.get(supplier_article):
-            pictures = [MANUAL_PICTURE_OVERRIDES[supplier_article]]
-        elif prom_pics:
+        if prom_pics:
             pictures = prom_pics
+        elif MANUAL_PICTURE_OVERRIDES.get(supplier_article):
+            # Brand-site photos; some hosts block Rozetka, so Prom wins.
+            pictures = [MANUAL_PICTURE_OVERRIDES[supplier_article]]
         elif fe and fe.get("picture"):
             pictures = [fe["picture"]]
         else:

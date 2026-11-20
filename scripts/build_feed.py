@@ -107,6 +107,23 @@ try:
 except FileNotFoundError:
     FLAVOUR_PICTURES = {}
 
+RAW_IMAGES_BASE = "https://raw.githubusercontent.com/sanctum1488zh/rozetka/main/images/"
+_IMG_DIR = os.path.join(os.path.dirname(__file__), "..", "images")
+
+
+def mirrored(url):
+    """Self-hosted copy of a hand-picked photo (see mirror_images.py)."""
+    import hashlib
+    name = hashlib.sha1(url.encode()).hexdigest()[:16]
+    try:
+        for f in os.listdir(_IMG_DIR):
+            if f.split(".")[0] == name:
+                return RAW_IMAGES_BASE + f
+    except FileNotFoundError:
+        pass
+    return url
+
+
 MANUAL_PICTURE_OVERRIDES = {
     '23719-06': 'https://ostrovit.com/hpeciai/089b15a36fad960e5c9ae106ce252372/eng_pl_OstroVit-Creatine-Monohydrate-1000-g-26790_3.png',  # OstroVit Creatine Monohydrate 1kg cola
     '19467-01': 'https://www.gosupps.com/media/catalog/product/6/1/61yil6qQwDL.jpg',  # Blender Bottle Classic 600ml red
@@ -685,7 +702,7 @@ def build_rozetka_feed(prom_offers, supplier_feed):
         if flav:
             # Flavour-exact photo passed moderation; extra Prom photos may
             # show another flavour, so this offer keeps only that one.
-            r["pictures"] = [flav]
+            r["pictures"] = [mirrored(flav)]
         offer = etree.SubElement(offers_el, "offer", id=r["id"],
                                   available="true" if r["available"] else "false")
         etree.SubElement(offer, "price").text = str(r["base_price"])

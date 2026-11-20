@@ -616,9 +616,19 @@ def build_rozetka_feed(prom_offers, supplier_feed):
         )
         fe = supplier_feed.get(supplier_article) if supplier_article else None
         available = fe["available"] if fe else o["available"]
-        picture = (MANUAL_PICTURE_OVERRIDES.get(supplier_article)
-                   or (fe["picture"] if fe and fe.get("picture") else None)
-                   or o["picture"])
+        # 20.11.2026: Prom photos are now the maintained source (the seller
+        # updates them there), so they win over the supplier feed photo.
+        # Manual overrides still come first; supplier photo is the fallback.
+        prom_pics = o.get("pictures") or ([o["picture"]] if o["picture"] else [])
+        if MANUAL_PICTURE_OVERRIDES.get(supplier_article):
+            pictures = [MANUAL_PICTURE_OVERRIDES[supplier_article]]
+        elif prom_pics:
+            pictures = prom_pics
+        elif fe and fe.get("picture"):
+            pictures = [fe["picture"]]
+        else:
+            pictures = []
+        picture = pictures[0] if pictures else None
         country = (fe["country"] if fe and fe.get("country") else o["country"])
         rrp = fe["rrp_uah"] if fe else None
         base_price, promo_price = compute_prices(o["price"], rrp, o["category_id"],
@@ -642,6 +652,7 @@ def build_rozetka_feed(prom_offers, supplier_feed):
             "base_price": base_price,
             "promo_price": promo_price,
             "picture": picture,
+            "pictures": pictures,
             "country": country,
             "description": clean_description(o["description"]),
             "description_ua": clean_description(o["description_ua"]) or clean_description(o["description"]),
@@ -652,15 +663,19 @@ def build_rozetka_feed(prom_offers, supplier_feed):
     dedupe_names(resolved)
 
     for r in resolved:
-        r["picture"] = (FLAVOUR_PICTURES.get(r["article"] or "")
-                        or FLAVOUR_PICTURES.get("id" + r["id"]) or r["picture"])
+        flav = FLAVOUR_PICTURES.get(r["article"] or "") or FLAVOUR_PICTURES.get("id" + r["id"])
+        if flav:
+            # Flavour-exact photo passed moderation; extra Prom photos may
+            # show another flavour, so this offer keeps only that one.
+            r["pictures"] = [flav]
         offer = etree.SubElement(offers_el, "offer", id=r["id"],
                                   available="true" if r["available"] else "false")
         etree.SubElement(offer, "price").text = str(r["base_price"])
         etree.SubElement(offer, "promo_price").text = str(r["promo_price"])
         etree.SubElement(offer, "currencyId").text = "UAH"
         etree.SubElement(offer, "categoryId").text = r["category_id"]
-        etree.SubElement(offer, "picture").text = r["picture"]
+        for pic in r["pictures"]:
+            etree.SubElement(offer, "picture").text = pic
         etree.SubElement(offer, "vendor").text = r["vendor"]
         if r["article"]:
             etree.SubElement(offer, "article").text = r["article"]
@@ -697,6 +712,7 @@ def parse_prom_feed(raw_bytes):
             "price": float(price_text) if price_text else None,
             "available": o.get("available") == "true",
             "picture": s(o.findtext("picture")),
+            "pictures": [s(x.text) for x in o.findall("picture") if s(x.text)][:15],
             "country": s(o.findtext("country_of_origin") or o.findtext("country")),
             "description": s(o.findtext("description")),
             "description_ua": s(o.findtext("description_ua")),

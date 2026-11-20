@@ -699,9 +699,11 @@ def build_rozetka_feed(prom_offers, supplier_feed):
 
     for r in resolved:
         flav = FLAVOUR_PICTURES.get(r["article"] or "") or FLAVOUR_PICTURES.get("id" + r["id"])
-        if flav:
-            # Flavour-exact photo passed moderation; extra Prom photos may
-            # show another flavour, so this offer keeps only that one.
+        if flav and mirrored(flav) != flav:
+            # Flavour-exact photo, self-hosted copy only: hosts that refused
+            # the mirror download also refuse Rozetka ("Фото не
+            # завантажуються"), so such offers keep their Prom photos.
+            # Extra Prom photos may show another flavour -> only this one.
             r["pictures"] = [mirrored(flav)]
         offer = etree.SubElement(offers_el, "offer", id=r["id"],
                                   available="true" if r["available"] else "false")

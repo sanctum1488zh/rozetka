@@ -107,6 +107,17 @@ try:
 except FileNotFoundError:
     FLAVOUR_PICTURES = {}
 
+# Lowest price of the same product on Rozetka (snapshot, see the file's _note).
+# When our margin price is more than 5% under it, we raise to ~1.5% under it.
+_MKT_PATH = os.path.join(os.path.dirname(__file__), "..", "references", "market_prices.json")
+try:
+    with open(_MKT_PATH, encoding="utf-8") as _f:
+        MARKET_PRICES = json.load(_f).get("prices", {})
+except FileNotFoundError:
+    MARKET_PRICES = {}
+MARKET_GAP = 0.05      # only act when we're this much cheaper than market
+MARKET_UNDERCUT = 0.015  # then sit this far under the cheapest competitor
+
 RAW_IMAGES_BASE = "https://raw.githubusercontent.com/sanctum1488zh/rozetka/main/images/"
 _IMG_DIR = os.path.join(os.path.dirname(__file__), "..", "images")
 
@@ -133,7 +144,7 @@ MANUAL_PICTURE_OVERRIDES = {
     '18610-01': 'https://mst-nutrition.de/cdn/shop/files/zinc-25-citrate-1.jpg',  # MST Zinc 25 Citrate 100 vcaps
 }
 
-TARGET_MARGIN = 0.05
+TARGET_MARGIN = 0.07  # 21.11.2026: owner chose 7% (was 5%)
 K_PROM = (1 + TARGET_MARGIN) / ((1 - 0.16) * (1 - 0.1889))  # for back-solving implied cost from a Prom price
 
 # ---------------------------------------------------------------
@@ -523,7 +534,7 @@ def price_for_margin(cost, brackets):
     return best
 
 
-def compute_prices(prom_price, rrp_uah, category_id, cost=None):
+def compute_prices(prom_price, rrp_uah, category_id, cost=None, market=None):
     """Returns (base_price, promo_price) both already >= supplier RRP as a safety floor.
     cost = supplier purchase price (vendorPrice). When known, the price is
     built from it; the Prom back-solve below is only a fallback (19.10.2026:
@@ -532,6 +543,8 @@ def compute_prices(prom_price, rrp_uah, category_id, cost=None):
         promo_price = price_for_margin(cost, get_brackets(category_id))
         if rrp_uah:
             promo_price = max(promo_price, math.ceil(rrp_uah))
+        if market and promo_price < market * (1 - MARKET_GAP):
+            promo_price = max(promo_price, math.floor(market * (1 - MARKET_UNDERCUT)))
         return math.ceil(promo_price / 0.84), promo_price
 
     if prom_price is None:
@@ -668,7 +681,8 @@ def build_rozetka_feed(prom_offers, supplier_feed):
         country = (fe["country"] if fe and fe.get("country") else o["country"])
         rrp = fe["rrp_uah"] if fe else None
         base_price, promo_price = compute_prices(o["price"], rrp, o["category_id"],
-                                                 cost=fe.get("cost") if fe else None)
+                                                 cost=fe.get("cost") if fe else None,
+                                                 market=MARKET_PRICES.get(supplier_article))
         if base_price is None or not picture:
             continue
         fixed_name, fixed_name_ua = apply_name_type_prefix(

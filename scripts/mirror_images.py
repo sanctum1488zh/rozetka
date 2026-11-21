@@ -30,11 +30,25 @@ def main():
         if name in have:
             continue
         try:
-            r = urlopen(Request(u, headers={"User-Agent": UA, "Accept": "image/avif,image/webp,image/*,*/*"}), timeout=30)
+            r = urlopen(Request(u, headers={"User-Agent": UA, "Accept": "image/jpeg,image/png,image/*;q=0.8,*/*;q=0.5"}), timeout=30)
             ctype = r.headers.get("Content-Type", "").split(";")[0].strip().lower()
             data = r.read()
             if ctype not in EXT or len(data) < 2000:
                 raise ValueError(f"not an image: {ctype} {len(data)}b")
+            if ctype == "image/webp":  # Rozetka is safest with JPEG/PNG
+                import io
+                from PIL import Image
+                im = Image.open(io.BytesIO(data))
+                if im.mode in ("RGBA", "LA", "P"):
+                    im = im.convert("RGBA")
+                    bg = Image.new("RGB", im.size, (255, 255, 255))
+                    bg.paste(im, mask=im.split()[-1])
+                    im = bg
+                else:
+                    im = im.convert("RGB")
+                buf = io.BytesIO()
+                im.save(buf, "JPEG", quality=92)
+                data, ctype = buf.getvalue(), "image/jpeg"
             open(os.path.join(OUT, name + EXT[ctype]), "wb").write(data)
             new += 1
         except Exception as e:  # noqa: BLE001 - best effort, keep going

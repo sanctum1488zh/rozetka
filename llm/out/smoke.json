@@ -1,0 +1,49 @@
+{
+  "openrouter": {
+    "key_present": false,
+    "free_models_count": 15,
+    "free_models": [
+      "inclusionai/ling-3.2-flash:free",
+      "particle-ai/particle-1:free",
+      "google/lyria-3-pro-preview",
+      "google/lyria-3-clip-preview",
+      "baidu/ernie-5.5-flash-preview:free",
+      "nvidia/nemotron-3.5-super-vl:free",
+      "nvidia/nemotron-3.5-lightning:free",
+      "nvidia/nemotron-3-ultra-550b-a55b:free",
+      "dots-studio/dots-3-note-preview:free",
+      "liquid/lfm-3-1.7b:free",
+      "recursive/flint-v1.0:free",
+      "google/gemma-4-26b-a4b-it:free",
+      "google/gemma-4-31b-it:free",
+      "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
+      "openrouter/free"
+    ],
+    "tests": [
+      {
+        "model": "inclusionai/ling-3.2-flash:free",
+        "ok": false,
+        "error": "HTTP 401: {\"error\":{\"message\":\"No cookie auth credentials found\",\"code\":401}}"
+      },
+      {
+        "model": "particle-ai/particle-1:free",
+        "ok": false,
+        "error": "HTTP 401: {\"error\":{\"message\":\"No cookie auth credentials found\",\"code\":401}}"
+      },
+      {
+        "model": "google/lyria-3-pro-preview",
+        "ok": false,
+        "error": "HTTP 401: {\"error\":{\"message\":\"No cookie auth credentials found\",\"code\":401}}"
+      },
+      {
+        "model": "google/lyria-3-clip-preview",
+        "ok": false,
+        "error": "HTTP 401: {\"error\":{\"message\":\"No cookie auth credentials found\",\"code\":401}}"
+      }
+    ]
+  },
+  "groq": {
+    "key_present": false,
+    "error": "HTTP 401"
+  }
+}

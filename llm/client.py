@@ -48,6 +48,8 @@ def free_models(provider):
 def chat(provider, model, messages, temperature=0.3, max_tokens=1500):
     key = key_for(provider)
     body = {"model": model, "messages": messages, "temperature": temperature, "max_tokens": max_tokens}
+    if "gpt-oss" in model:
+        body["reasoning_effort"] = "low"  # otherwise reasoning eats the token budget -> empty answer
     t = time.time()
     out = _req(f"{PROVIDERS[provider]['base']}/chat/completions", key, body)
     return (out["choices"][0]["message"].get("content") or ""), round(time.time() - t, 1)

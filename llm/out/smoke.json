@@ -1,12 +1,10 @@
 {
   "openrouter": {
     "key_present": false,
-    "free_models_count": 15,
+    "free_models_count": 13,
     "free_models": [
       "inclusionai/ling-3.2-flash:free",
       "particle-ai/particle-1:free",
-      "google/lyria-3-pro-preview",
-      "google/lyria-3-clip-preview",
       "baidu/ernie-5.5-flash-preview:free",
       "nvidia/nemotron-3.5-super-vl:free",
       "nvidia/nemotron-3.5-lightning:free",
@@ -31,12 +29,12 @@
         "error": "HTTP 401: {\"error\":{\"message\":\"No cookie auth credentials found\",\"code\":401}}"
       },
       {
-        "model": "google/lyria-3-pro-preview",
+        "model": "baidu/ernie-5.5-flash-preview:free",
         "ok": false,
         "error": "HTTP 401: {\"error\":{\"message\":\"No cookie auth credentials found\",\"code\":401}}"
       },
       {
-        "model": "google/lyria-3-clip-preview",
+        "model": "nvidia/nemotron-3.5-super-vl:free",
         "ok": false,
         "error": "HTTP 401: {\"error\":{\"message\":\"No cookie auth credentials found\",\"code\":401}}"
       }

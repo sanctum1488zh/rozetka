@@ -41,7 +41,7 @@ def free_models(provider):
     if provider == "groq":
         ids = [m["id"] for m in _req(f"{base}/models", key)["data"]]
         pref = [m for m in GROQ_PREFERRED if m in ids]
-        return pref + [m for m in ids if m not in pref and not any(x in m for x in ("whisper", "tts", "guard", "playai"))]
+        return pref + [m for m in ids if m not in pref and not any(x in m for x in ("whisper", "tts", "guard", "playai", "orpheus", "allam"))]
     return []
 
 
@@ -50,7 +50,7 @@ def chat(provider, model, messages, temperature=0.3, max_tokens=1500):
     body = {"model": model, "messages": messages, "temperature": temperature, "max_tokens": max_tokens}
     t = time.time()
     out = _req(f"{PROVIDERS[provider]['base']}/chat/completions", key, body)
-    return out["choices"][0]["message"]["content"], round(time.time() - t, 1)
+    return (out["choices"][0]["message"].get("content") or ""), round(time.time() - t, 1)
 
 
 def chat_fallback(chain, messages, **kw):

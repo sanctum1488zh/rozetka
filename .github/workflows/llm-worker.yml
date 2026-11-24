@@ -1,0 +1,38 @@
+name: LLM worker
+
+on:
+  push:
+    branches: [llm-workers]
+    paths: ["llm/**", ".github/workflows/llm-worker.yml"]
+  workflow_dispatch:
+    inputs:
+      task:
+        description: "Script in llm/ to run (e.g. smoke_test)"
+        default: smoke_test
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run task
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+        run: |
+          TASK="${{ github.event.inputs.task }}"
+          if [ -z "$TASK" ]; then TASK=$(cat llm/TASK 2>/dev/null || echo smoke_test); fi
+          python "llm/${TASK}.py"
+      - name: Commit results
+        run: |
+          git config user.name "llm-worker-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add llm/out || true
+          git diff --quiet --cached || git commit -m "LLM worker results [skip ci]"
+          git push || true

@@ -35,7 +35,7 @@ def free_models(provider):
         free = [m for m in data
                 if str(m.get("pricing", {}).get("prompt")) == "0"
                 and str(m.get("pricing", {}).get("completion")) == "0"
-                and "text" in (m.get("architecture", {}).get("output_modalities") or ["text"])]
+                and (m.get("architecture", {}).get("output_modalities") or ["text"]) == ["text"]]
         free.sort(key=lambda m: -(m.get("context_length") or 0))
         return [m["id"] for m in free]
     if provider == "groq":

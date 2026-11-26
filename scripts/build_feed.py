@@ -511,6 +511,7 @@ def clean_description(text):
     text = DESC_CUT_RE.sub("", text)
     text = DESC_SERVICE_RE.sub("", text)
     text = DESC_DOMAIN_RE.sub("", text)
+    text = fix_abbr(text)
     for _ in range(3):
         text = EMPTY_TAG_RE.sub("", text)
     text = re.sub(r"<ul>\s*</ul>", "", text, flags=re.IGNORECASE)

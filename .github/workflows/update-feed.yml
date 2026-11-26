@@ -44,4 +44,4 @@ jobs:
           git config user.email "actions@users.noreply.github.com"
           git add feed/rozetka_feed.xml images
           git diff --quiet --cached || git commit -m "Auto-update Rozetka feed"
-          git push
+          for i in 1 2 3; do git pull --rebase -X ours origin main && git push && break; sleep 5; done

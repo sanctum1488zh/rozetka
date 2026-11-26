@@ -340,7 +340,23 @@ NAME_TYPE_PREFIX = {
 STARTS_CYRILLIC_RE = re.compile(r"^[А-Яа-яІіЇїЄєҐґ]")
 
 
+# Rozetka-модератор 26.11: сокращения «предтрен/передтренік» в названии не допускаются
+ABBR_FIX = [
+    (re.compile(r"\bПредтрен(ик)?\b"), "Предтренировочный комплекс"),
+    (re.compile(r"\bпредтрен(ик)?\b"), "предтренировочный комплекс"),
+    (re.compile(r"\bПередтрен(ік)?\b"), "Передтренувальний комплекс"),
+    (re.compile(r"\bпередтрен(ік)?\b"), "передтренувальний комплекс"),
+]
+
+
+def fix_abbr(s):
+    for rx, rep in ABBR_FIX:
+        s = rx.sub(rep, s)
+    return s
+
+
 def apply_name_type_prefix(name, name_ua, category_id):
+    name, name_ua = fix_abbr(name), fix_abbr(name_ua)
     prefix = NAME_TYPE_PREFIX.get(category_id)
     if not prefix or STARTS_CYRILLIC_RE.match(name):
         return name, name_ua

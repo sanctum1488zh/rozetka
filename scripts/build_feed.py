@@ -500,6 +500,8 @@ DESC_CUT_RE = re.compile(r"\s*(Купити з доставкою|Купить �
 DESC_SERVICE_RE = re.compile(
     r"[^.!?<>]*(?:доставк|возврат|повернен|Нов(?:ой|ою|ая|а|ій) [ПпPp](?:очт|ошт)|гаранті|гаранти|оплат[аиуі] при)[^.!?<>]*[.!?]?",
     re.IGNORECASE)
+# Rozetka stop-word ".com" (26.11, GymBeam): no website mentions in the text.
+DESC_DOMAIN_RE = re.compile(r",?\s*(?:на|по данным|за даними|on)?\s*\b[\w-]+\.(?:com|net|org|com\.ua|ua|pl|de|eu)\b(?:\s*[—-]\s*[^<.;]*)?", re.IGNORECASE)
 EMPTY_TAG_RE = re.compile(r"<(p|li|strong|b|em|span)>\s*</\1>", re.IGNORECASE)
 
 
@@ -508,6 +510,7 @@ def clean_description(text):
         return ""
     text = DESC_CUT_RE.sub("", text)
     text = DESC_SERVICE_RE.sub("", text)
+    text = DESC_DOMAIN_RE.sub("", text)
     for _ in range(3):
         text = EMPTY_TAG_RE.sub("", text)
     text = re.sub(r"<ul>\s*</ul>", "", text, flags=re.IGNORECASE)
